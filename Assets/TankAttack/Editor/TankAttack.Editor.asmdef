@@ -1,0 +1,12 @@
+{
+  "name": "TankAttack.Editor",
+  "references": [
+    "TankAttack.Runtime",
+    "Unity.InputSystem",
+    "Unity.AI.Navigation",
+    "UnityEditor.TestRunner"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

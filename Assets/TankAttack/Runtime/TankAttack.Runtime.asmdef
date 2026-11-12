@@ -1,0 +1,8 @@
+{
+  "name": "TankAttack.Runtime",
+  "rootNamespace": "TankAttack",
+  "references": [
+    "Unity.InputSystem",
+    "Unity.AI.Navigation"
+  ]
+}
