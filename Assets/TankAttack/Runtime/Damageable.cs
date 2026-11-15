@@ -15,6 +15,8 @@ namespace TankAttack
             float old = Health; Health = Mathf.Min(MaxHealth,Health + amount); return Health - old;
         }
         public bool IsDead { get; private set; }
+        public void RestoreHealth(float health)
+        { if (!IsDead) Health = Mathf.Clamp(health,1,MaxHealth); }
         public event Action<Damageable, Team> Died;
         [Min(0), Tooltip("Minimum world-space target height for horizontal shots. Does not affect movement collisions. Zero disables the extra hit volume.")]
         public float shotTargetHeight = 3;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 namespace TankAttack
@@ -32,6 +33,13 @@ namespace TankAttack
             Select(selected>=0 ? selected : Mathf.Min(1,roster.tanks.Length-1));
         }
         void Start() { if(EventSystem.current!=null) EventSystem.current.SetSelectedGameObject(tankButtons[SelectedIndex].gameObject); }
+        void Update()
+        {
+            var events=EventSystem.current; var pad=Gamepad.current;
+            if (IsLoading || events == null || events.currentSelectedGameObject != null || pad == null) return;
+            if (pad.dpad.ReadValue().sqrMagnitude > .1f || pad.leftStick.ReadValue().sqrMagnitude > .2f || pad.buttonSouth.wasPressedThisFrame)
+                events.SetSelectedGameObject(tankButtons[SelectedIndex].gameObject);
+        }
         public void Select(int index)
         {
             if(IsLoading || index<0 || index>=roster.tanks.Length) return;
@@ -46,7 +54,7 @@ namespace TankAttack
                 cardBackgrounds[i].color=i==index ? new Color(.16f,.22f,.28f) : new Color(.075f,.10f,.14f);
                 selectionBars[i].color=i==index ? roster.tanks[i].accent : new Color(.17f,.21f,.26f);
             }
-            status.text="Select your tank, then confirm deployment.";
+            status.text="Choose a tank. D-pad / arrows: navigate | Cross / A: confirm.";
             var navigation=confirmButton.navigation; navigation.selectOnUp=tankButtons[index]; confirmButton.navigation=navigation;
         }
         public void Confirm()
@@ -55,6 +63,7 @@ namespace TankAttack
             if(SceneUtility.GetBuildIndexByScenePath(roster.gameplayScene)<0)
             { status.text="Gameplay scene is missing from the build scene list."; return; }
             TankSelection.Select(roster.tanks[SelectedIndex]);
+            LevelRun.Reset();
             IsLoading=true; confirmButton.interactable=false;
             foreach(var button in tankButtons) button.interactable=false;
             confirmLabel.text="DEPLOYING..."; status.text="Loading battlefield";

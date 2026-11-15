@@ -7,10 +7,11 @@ namespace TankAttack
     {
         public static BattleSession Instance { get; private set; }
         public static bool IsRunning => Instance == null || Instance.State == RunState.Playing;
-        public enum RunState { Playing, Won, Lost }
+        public enum RunState { Playing, Won, Lost, Generating }
         public RunState State { get; private set; }
         public Damageable player;
         public Transform destination;
+        public GeneratedLevel generatedLevel;
         public string menuScene = "Assets/TankAttack/Scenes/TankAttack_Menu.unity";
         public int Score { get; private set; }
         GUIStyle title, body;
@@ -22,11 +23,34 @@ namespace TankAttack
         void Update()
         {
             if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) { ReturnToMenu(); return; }
+            foreach (var pad in Gamepad.all)
+            {
+                if (pad.startButton.wasPressedThisFrame) { ReturnToMenu(); return; }
+                if (State != RunState.Playing && pad.selectButton.wasPressedThisFrame) { Restart(); return; }
+            }
             // Remains available after the player object has been destroyed.
             if (State != RunState.Playing && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame) Restart();
         }
         public void AddScore(int points) { if (State == RunState.Playing) Score += Mathf.Max(0, points); }
-        public void Complete() { if (State == RunState.Playing) { State = RunState.Won; Cursor.visible = true; } }
+        public void BeginGeneration() { State = RunState.Generating; }
+        public void FinishGeneration(int entryScore) { Score=entryScore; State=RunState.Playing; }
+        public void Complete()
+        {
+            if (State != RunState.Playing) return;
+            State = RunState.Won; Cursor.visible = true;
+            if (generatedLevel != null && !restarting)
+            {
+                restarting=true;
+                LevelRun.Advance(this);
+                StartCoroutine(LoadNextLevel());
+            }
+        }
+        System.Collections.IEnumerator LoadNextLevel()
+        {
+            yield return null;
+            CrossfadedEngineAudio.Existing?.StopEngine();
+            yield return SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().path);
+        }
         public void Restart()
         { if (!restarting) { restarting = true; SceneManager.LoadScene(SceneManager.GetActiveScene().path); } }
         public void ReturnToMenu()
@@ -43,15 +67,19 @@ namespace TankAttack
                 body = new GUIStyle(GUI.skin.label) { fontSize = 16 };
             }
             GUI.Box(new Rect(14, 14, 380, 156), GUIContent.none);
-            GUI.Label(new Rect(28, 22, 350, 35), "TANK ATTACK / PROTOTYPE", title);
+            GUI.Label(new Rect(28, 22, 350, 35), generatedLevel != null ? $"TANK ATTACK / LEVEL {LevelRun.Level}" : "TANK ATTACK / PROTOTYPE", title);
             GUI.Label(new Rect(28, 60, 350, 28), $"Hull {(player != null ? player.Health : 0):0}   |   Score {Score}", body);
-            GUI.Label(new Rect(28, 91, 350, 24), "WASD / arrows: drive | R: restart | Esc: menu", body);
-            GUI.Label(new Rect(28, 118, 350, 24), "LMB: cannon | RMB: MG | 1-4 / wheel: swap", body);
+            var playerInput=player != null ? player.GetComponent<PlayerTankInput>() : null;
+            bool gamepad=playerInput != null && playerInput.UsingGamepad;
+            GUI.Label(new Rect(28, 91, 350, 24), gamepad ? "Left stick: drive | Right stick: aim" : "WASD / arrows: drive | R: restart | Esc: menu", body);
+            GUI.Label(new Rect(28, 118, 350, 24), gamepad ? "RT/R2: cannon | LT/L2: MG | LB/RB: swap" : "LMB: cannon | RMB: MG | 1-4 / wheel: swap", body);
             if (State != RunState.Playing)
             {
                 GUI.Box(new Rect(Screen.width / 2 - 220, Screen.height / 2 - 70, 440, 140), GUIContent.none);
-                GUI.Label(new Rect(Screen.width / 2 - 190, Screen.height / 2 - 50, 400, 40), State == RunState.Won ? "DESTINATION REACHED" : "TANK DESTROYED", title);
-                GUI.Label(new Rect(Screen.width / 2 - 190, Screen.height / 2, 400, 30), $"Score {Score}     R: restart | Esc: tank selection", body);
+                GUI.Label(new Rect(Screen.width / 2 - 190, Screen.height / 2 - 50, 400, 40), State == RunState.Generating ? "BUILDING BATTLEFIELD" : State == RunState.Won ? "DESTINATION REACHED" : "TANK DESTROYED", title);
+                string message = State == RunState.Generating ? (generatedLevel != null && generatedLevel.Error != null ? "Generation failed. R: retry | Esc: menu" : "Placing terrain and building navigation...") : State == RunState.Won && generatedLevel != null ? "Loading next level..." : $"Score {Score}     R: restart | Esc: tank selection";
+                GUI.Label(new Rect(Screen.width / 2 - 190, Screen.height / 2, 400, 30), message, body);
+                if (Gamepad.all.Count > 0) GUI.Label(new Rect(Screen.width/2-190,Screen.height/2+30,400,30),"Share/Back: restart | Options/Start: menu",body);
                 return;
             }
             if (player == null) return;

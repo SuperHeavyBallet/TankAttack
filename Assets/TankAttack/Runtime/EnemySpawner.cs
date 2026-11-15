@@ -7,6 +7,9 @@ namespace TankAttack
         public GameObject enemyPrefab;
         [Tooltip("Optional per-slot pattern. Empty uses enemyPrefab for every slot.")]
         public GameObject[] enemyVariants;
+        public bool randomizeVariants;
+        public int variantSeed;
+        System.Random variantRandom;
         public Transform[] spawnPoints;
         [Min(0)] public float respawnDelay = 8;
         [Min(0)] public float initialDelay = 2;
@@ -14,13 +17,15 @@ namespace TankAttack
         public int ActiveCount { get; private set; }
         IEnumerator Start()
         {
+            variantRandom = new System.Random(variantSeed);
             yield return new WaitForSeconds(initialDelay);
             for (int i=0;i<spawnPoints.Length;i++) StartCoroutine(SpawnSlot(spawnPoints[i],0,PrefabForSlot(i)));
         }
         GameObject PrefabForSlot(int index)
         {
             if (enemyVariants == null || enemyVariants.Length == 0) return enemyPrefab;
-            return enemyVariants[index % enemyVariants.Length] != null ? enemyVariants[index % enemyVariants.Length] : enemyPrefab;
+            int choice = randomizeVariants ? variantRandom.Next(enemyVariants.Length) : index % enemyVariants.Length;
+            return enemyVariants[choice] != null ? enemyVariants[choice] : enemyPrefab;
         }
         IEnumerator SpawnSlot(Transform point, float delay, GameObject prefab)
         {
@@ -35,7 +40,7 @@ namespace TankAttack
                     {
                         ActiveCount--;
                         if (attacker == Team.Player) BattleSession.Instance?.AddScore(dead.settings.scoreValue);
-                        if (isActiveAndEnabled) StartCoroutine(SpawnSlot(point, respawnDelay, prefab));
+                        if (isActiveAndEnabled) StartCoroutine(SpawnSlot(point, respawnDelay, randomizeVariants ? PrefabForSlot(0) : prefab));
                     };
                     yield break;
                 }

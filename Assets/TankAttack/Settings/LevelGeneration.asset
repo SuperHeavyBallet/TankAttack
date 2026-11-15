@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d6af64f9404aabaa643ca4892d8463, type: 3}
+  m_Name: LevelGeneration
+  m_EditorClassIdentifier: TankAttack.Runtime::TankAttack.LevelGenerationSettings
+  minimumLength: 50
+  maximumLength: 300
+  firstLevelMaximumLength: 75
+  lengthGrowthPerLevel: 25
+  minimumWidth: 50
+  maximumWidth: 200
+  preferredWidthRatio: 0.65
+  bandLength: 50
+  terrainBlocksPerBand: 6
+  weaponPickups:
+  - {fileID: 1516347167253044525, guid: aa707754dbf9d294fb9be1ebc5ff78f6, type: 3}
+  - {fileID: 6995584378333108013, guid: 87756a280343a884280679be2cfaa852, type: 3}
+  - {fileID: 5960771265843658356, guid: 98872e14b1ab91440a7a5aaab805c3d7, type: 3}
+  terrainPrefabs:
+  - {fileID: 8289820482371884725, guid: 0805b2ad07de03f4a84b1ab6e44605c9, type: 3}
+  - {fileID: 3627891192347734560, guid: 57a5cd926cd72994d8fec5087a02d497, type: 3}
+  - {fileID: 1693193766022361422, guid: cef57254b02ad054ba2be63bd6ef9032, type: 3}
+  - {fileID: 5813465405297729085, guid: 99d835666acecea49b189d528435c05c, type: 3}
+  - {fileID: 1785632188555262277, guid: a1157269dc58955438a43d0c59a9c636, type: 3}
+  - {fileID: 5403234039868388771, guid: 466ca02e5f0ec754b96ef4a4d55b5b47, type: 3}
+  - {fileID: 979015530842708405, guid: aa519a98f32c4094f9ae00a4b2e41230, type: 3}
+  - {fileID: 304113762343415943, guid: bdee39cd5bfeec04d8f884602f28bd27, type: 3}
+  terrainClearance: 6
+  centerRouteWidth: 8
+  navigationAgentRadius: 2.3
+  endClearance: 10
+  placementAttempts: 80
+  wallHeight: 5
+  wallThickness: 2
+  groundMaterial: {fileID: 2100000, guid: e6f59d75b2ea2a64faf512880f3b02e5, type: 2}
+  wallMaterial: {fileID: 2100000, guid: 01196a9ac2b9c774bb12f976508a5604, type: 2}
+  fixedSeed: 0

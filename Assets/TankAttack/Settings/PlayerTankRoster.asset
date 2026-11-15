@@ -16,5 +16,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 913f240a0c78ac3408d8716f5999112c, type: 2}
   - {fileID: 11400000, guid: ab1dd7c048cf61c4d8d17272a5ffcd27, type: 2}
   - {fileID: 11400000, guid: c1fa4a2966d7eb94480b7cbe721efa8c, type: 2}
-  gameplayScene: Assets/TankAttack/Scenes/TankAttack_Prototype.unity
+  gameplayScene: Assets/TankAttack/Scenes/TankAttack_Generated.unity
   menuScene: Assets/TankAttack/Scenes/TankAttack_Menu.unity

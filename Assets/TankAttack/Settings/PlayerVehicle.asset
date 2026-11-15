@@ -18,6 +18,6 @@ MonoBehaviour:
   acceleration: 25
   braking: 50
   hullTurnSpeed: 100
-  turretTurnSpeed: 100
+  turretTurnSpeed: 150
   elevationSpeed: 45
   scoreValue: 100

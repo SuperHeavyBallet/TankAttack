@@ -19,7 +19,7 @@ namespace TankAttack
         }
         void FixedUpdate()
         {
-            if (settings == null) return;
+            if (settings == null || body.isKinematic) return;
             var input = BattleSession.IsRunning ? new Vector2(Mathf.Clamp(Command.x, -1, 1), Mathf.Clamp(Command.y, -1, 1)) : Vector2.zero;
             float desired = input.y * (input.y >= 0 ? settings.forwardSpeed : settings.reverseSpeed);
             float rate = Mathf.Abs(desired) < Mathf.Abs(speed) || desired * speed < 0 ? settings.braking : settings.acceleration;

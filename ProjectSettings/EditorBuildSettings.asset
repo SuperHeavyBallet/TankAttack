@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/TankAttack/Scenes/TankAttack_Menu.unity
     guid: 017d679ad794b444ca1fea683f06dc56
   - enabled: 1
+    path: Assets/TankAttack/Scenes/TankAttack_Generated.unity
+    guid: 77c1d3f5801cf984786da7f2b4913b68
+  - enabled: 1
     path: Assets/TankAttack/Scenes/TankAttack_Prototype.unity
     guid: 53b9c1363d941d144b8e3b8eecec79c2
   - enabled: 1

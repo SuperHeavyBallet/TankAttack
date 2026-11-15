@@ -8,7 +8,7 @@ namespace TankAttack.Tests
     public sealed class MenuAudioTests
     {
         const string Menu="Assets/TankAttack/Scenes/TankAttack_Menu.unity";
-        const string Game="Assets/TankAttack/Scenes/TankAttack_Prototype.unity";
+        const string Game="Assets/TankAttack/Scenes/TankAttack_Generated.unity";
         [UnitySetUp]
         public IEnumerator Prepare()
         {
@@ -45,6 +45,8 @@ namespace TankAttack.Tests
             while(SceneManager.GetActiveScene().path!=Game && Time.realtimeSinceStartup<deadline) yield return null;
             yield return null;
             Assert.That(SceneManager.GetActiveScene().path,Is.EqualTo(Game));
+            while (BattleSession.Instance.State == BattleSession.RunState.Generating && Time.realtimeSinceStartup<deadline) yield return null;
+            Assert.That(BattleSession.Instance.generatedLevel.Ready,Is.True);
             var session=BattleSession.Instance; var input=session.player.GetComponent<PlayerTankInput>(); input.enabled=false;
             Object.FindAnyObjectByType<EnemySpawner>().gameObject.SetActive(false);
             Assert.That(session.player.settings,Is.EqualTo(tank.vehicle));
@@ -66,6 +68,8 @@ namespace TankAttack.Tests
             Assert.That(input.cannon.settings,Is.EqualTo(tank.cannon));
             BattleSession.Instance.player.ApplyDamage(10,Team.Enemy);
             var previous=BattleSession.Instance; previous.Restart(); yield return null; yield return null;
+            float readyDeadline=Time.realtimeSinceStartup+30;
+            while (!BattleSession.Instance.generatedLevel.Ready && Time.realtimeSinceStartup<readyDeadline) yield return null;
             Assert.That(BattleSession.Instance,Is.Not.EqualTo(previous));
             Assert.That(BattleSession.Instance.player.Health,Is.EqualTo(tank.vehicle.health));
             Assert.That(BattleSession.Instance.player.GetComponent<PlayerTankInput>().cannon.settings,Is.EqualTo(tank.cannon));

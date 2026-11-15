@@ -18,6 +18,32 @@ namespace TankAttack
         float nextShot;
         Damageable owner;
         VehicleAudio audioBus;
+        public sealed class Loadout
+        {
+            public WeaponSettings[] weapons;
+            public int[] ammo;
+            public int selected;
+            public float reloadRemaining;
+        }
+        public Loadout CaptureLoadout()
+        {
+            var state = new Loadout { weapons=collected.ToArray(), ammo=new int[collected.Count], selected=collected.IndexOf(settings), reloadRemaining=Mathf.Max(0,nextShot-Time.time) };
+            for (int i=0;i<collected.Count;i++) state.ammo[i]=AmmoFor(collected[i]);
+            return state;
+        }
+        public void RestoreLoadout(Loadout state)
+        {
+            if (state == null) return;
+            collected.Clear(); ammunition.Clear();
+            for (int i=0;i<state.weapons.Length;i++)
+            {
+                if (state.weapons[i] == null) continue;
+                collected.Add(state.weapons[i]); ammunition[state.weapons[i]]=state.ammo[i];
+            }
+            settings = defaultSettings;
+            if (state.selected >= 0 && state.selected < state.weapons.Length && Available(state.weapons[state.selected])) settings=state.weapons[state.selected];
+            nextShot=Time.time+state.reloadRemaining;
+        }
         void Awake()
         {
             owner = GetComponentInParent<Damageable>(); audioBus = GetComponentInParent<VehicleAudio>();

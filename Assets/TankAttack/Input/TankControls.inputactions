@@ -1,324 +1,437 @@
 {
-    "version": 1,
-    "name": "TankControls",
-    "maps": [
+  "version": 1,
+  "name": "TankControls",
+  "maps": [
+    {
+      "name": "Tank",
+      "id": "ec443942-9913-40c6-872c-6f86c41e3225",
+      "actions": [
         {
-            "name": "Tank",
-            "id": "ec443942-9913-40c6-872c-6f86c41e3225",
-            "actions": [
-                {
-                    "name": "Move",
-                    "type": "Value",
-                    "id": "c23d7691-c8fd-4397-a98d-4b015e405f57",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true,
-                    "priority": 0
-                },
-                {
-                    "name": "Point",
-                    "type": "Value",
-                    "id": "1c27ef19-db7a-472c-9a61-19cfed22e027",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true,
-                    "priority": 0
-                },
-                {
-                    "name": "Cannon",
-                    "type": "Button",
-                    "id": "e2611033-dd0b-47e2-abd4-00d9975fa2e2",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false,
-                    "priority": 0
-                },
-                {
-                    "name": "MachineGun",
-                    "type": "Button",
-                    "id": "3eefe624-4e3d-446b-b257-4392eed73916",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false,
-                    "priority": 0
-                },
-                {
-                    "name": "Restart",
-                    "type": "Button",
-                    "id": "4c97a58c-7cc0-4cc9-9f12-878a125ccbf0",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false,
-                    "priority": 0
-                },
-                {
-                    "name": "CycleWeapon",
-                    "type": "Value",
-                    "id": "e1faefe7-b80a-4cb7-82b8-ff5c4159027c",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true,
-                    "priority": 0
-                },
-                {
-                    "name": "Weapon1",
-                    "type": "Button",
-                    "id": "069d7570-94b0-4702-a2b3-063b81e823f1",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false,
-                    "priority": 0
-                },
-                {
-                    "name": "Weapon2",
-                    "type": "Button",
-                    "id": "79d07897-4a12-4923-b3c6-9259d5d6d090",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false,
-                    "priority": 0
-                },
-                {
-                    "name": "Weapon3",
-                    "type": "Button",
-                    "id": "97bbf9c0-060b-4196-8187-4b810b3583b0",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false,
-                    "priority": 0
-                },
-                {
-                    "name": "Weapon4",
-                    "type": "Button",
-                    "id": "cae099fb-8fb1-4ca0-928b-21371f2418e2",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false,
-                    "priority": 0
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "2DVector",
-                    "id": "9ce6cf73-abd3-4d93-b977-6824b212345e",
-                    "path": "2DVector(mode=1)",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "Up",
-                    "id": "0a7f5f9f-918d-48b9-b1eb-b20adcbe7227",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Down",
-                    "id": "61921cce-828e-4468-86a9-029d13dde821",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Left",
-                    "id": "1e0545a1-09e8-4d01-a3ad-ff1777c35dc7",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Right",
-                    "id": "a5a06599-5396-41e6-8612-0d6e5a243f5f",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "2DVector",
-                    "id": "709ef5de-499f-4222-9999-1e98b2c7bd5e",
-                    "path": "2DVector(mode=1)",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "Up",
-                    "id": "57070fc3-ce9d-4d00-8b3e-8d354af44b4e",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Down",
-                    "id": "105c372e-f814-4204-be65-b1317cd44ae7",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Left",
-                    "id": "3949901f-1667-42af-a014-a17231fef01f",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Right",
-                    "id": "14b4cb48-458a-42e2-873a-80bfefa203f1",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "d34edd83-c15b-4423-a570-8f3a8bbb032c",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Point",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "95faf649-6cc1-465b-b90f-6a86e7be022e",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Cannon",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e3fa80fc-e62b-4bf0-9c6a-d084d8a689cc",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MachineGun",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3f1603c5-ac4b-4c3b-8dca-1725cef0bed9",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Restart",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "322a7caa-f2c9-483e-83c3-99638334f0ca",
-                    "path": "<Mouse>/scroll/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CycleWeapon",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "43d6c159-aa7f-40de-a8fb-15b1b0d03e77",
-                    "path": "<Keyboard>/digit1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Weapon1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "50b2f6ab-ed42-4188-be55-fd8ed6a278a5",
-                    "path": "<Keyboard>/digit2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Weapon2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "20b7dc42-840d-4d96-8766-a2e3882fbb18",
-                    "path": "<Keyboard>/digit3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Weapon3",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "25ae4720-84c6-4abf-be66-b1ae794b68e1",
-                    "path": "<Keyboard>/digit4",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Weapon4",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
+          "name": "Move",
+          "type": "Value",
+          "id": "c23d7691-c8fd-4397-a98d-4b015e405f57",
+          "expectedControlType": "Vector2",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": true,
+          "priority": 0
+        },
+        {
+          "name": "Point",
+          "type": "PassThrough",
+          "id": "1c27ef19-db7a-472c-9a61-19cfed22e027",
+          "expectedControlType": "Vector2",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false,
+          "priority": 0
+        },
+        {
+          "name": "Cannon",
+          "type": "Button",
+          "id": "e2611033-dd0b-47e2-abd4-00d9975fa2e2",
+          "expectedControlType": "",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false,
+          "priority": 0
+        },
+        {
+          "name": "MachineGun",
+          "type": "Button",
+          "id": "3eefe624-4e3d-446b-b257-4392eed73916",
+          "expectedControlType": "",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false,
+          "priority": 0
+        },
+        {
+          "name": "Restart",
+          "type": "Button",
+          "id": "4c97a58c-7cc0-4cc9-9f12-878a125ccbf0",
+          "expectedControlType": "",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false,
+          "priority": 0
+        },
+        {
+          "name": "CycleWeapon",
+          "type": "Value",
+          "id": "e1faefe7-b80a-4cb7-82b8-ff5c4159027c",
+          "expectedControlType": "",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": true,
+          "priority": 0
+        },
+        {
+          "name": "Weapon1",
+          "type": "Button",
+          "id": "069d7570-94b0-4702-a2b3-063b81e823f1",
+          "expectedControlType": "",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false,
+          "priority": 0
+        },
+        {
+          "name": "Weapon2",
+          "type": "Button",
+          "id": "79d07897-4a12-4923-b3c6-9259d5d6d090",
+          "expectedControlType": "",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false,
+          "priority": 0
+        },
+        {
+          "name": "Weapon3",
+          "type": "Button",
+          "id": "97bbf9c0-060b-4196-8187-4b810b3583b0",
+          "expectedControlType": "",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false,
+          "priority": 0
+        },
+        {
+          "name": "Weapon4",
+          "type": "Button",
+          "id": "cae099fb-8fb1-4ca0-928b-21371f2418e2",
+          "expectedControlType": "",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false,
+          "priority": 0
+        },
+        {
+          "name": "GamepadMove",
+          "type": "Value",
+          "id": "15cafbc9-dd7d-45cb-985d-b80ef5e8cdbd",
+          "expectedControlType": "Vector2",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": true
+        },
+        {
+          "name": "StickAim",
+          "type": "Value",
+          "id": "e1db66d4-60eb-4f49-bd35-df0c23313e17",
+          "expectedControlType": "Vector2",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": true
+        },
+        {
+          "name": "PreviousWeapon",
+          "type": "Button",
+          "id": "eec62a41-84e4-4232-bcb6-e86eac3317d0",
+          "expectedControlType": "Button",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false
+        },
+        {
+          "name": "NextWeapon",
+          "type": "Button",
+          "id": "0e6d2efa-d64e-43cf-b518-7e7bbe0888fa",
+          "expectedControlType": "Button",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false
         }
-    ],
-    "controlSchemes": []
+      ],
+      "bindings": [
+        {
+          "name": "2DVector",
+          "id": "9ce6cf73-abd3-4d93-b977-6824b212345e",
+          "path": "2DVector(mode=1)",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Move",
+          "isComposite": true,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "Up",
+          "id": "0a7f5f9f-918d-48b9-b1eb-b20adcbe7227",
+          "path": "<Keyboard>/w",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Move",
+          "isComposite": false,
+          "isPartOfComposite": true
+        },
+        {
+          "name": "Down",
+          "id": "61921cce-828e-4468-86a9-029d13dde821",
+          "path": "<Keyboard>/s",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Move",
+          "isComposite": false,
+          "isPartOfComposite": true
+        },
+        {
+          "name": "Left",
+          "id": "1e0545a1-09e8-4d01-a3ad-ff1777c35dc7",
+          "path": "<Keyboard>/a",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Move",
+          "isComposite": false,
+          "isPartOfComposite": true
+        },
+        {
+          "name": "Right",
+          "id": "a5a06599-5396-41e6-8612-0d6e5a243f5f",
+          "path": "<Keyboard>/d",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Move",
+          "isComposite": false,
+          "isPartOfComposite": true
+        },
+        {
+          "name": "2DVector",
+          "id": "709ef5de-499f-4222-9999-1e98b2c7bd5e",
+          "path": "2DVector(mode=1)",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Move",
+          "isComposite": true,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "Up",
+          "id": "57070fc3-ce9d-4d00-8b3e-8d354af44b4e",
+          "path": "<Keyboard>/upArrow",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Move",
+          "isComposite": false,
+          "isPartOfComposite": true
+        },
+        {
+          "name": "Down",
+          "id": "105c372e-f814-4204-be65-b1317cd44ae7",
+          "path": "<Keyboard>/downArrow",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Move",
+          "isComposite": false,
+          "isPartOfComposite": true
+        },
+        {
+          "name": "Left",
+          "id": "3949901f-1667-42af-a014-a17231fef01f",
+          "path": "<Keyboard>/leftArrow",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Move",
+          "isComposite": false,
+          "isPartOfComposite": true
+        },
+        {
+          "name": "Right",
+          "id": "14b4cb48-458a-42e2-873a-80bfefa203f1",
+          "path": "<Keyboard>/rightArrow",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Move",
+          "isComposite": false,
+          "isPartOfComposite": true
+        },
+        {
+          "name": "",
+          "id": "d34edd83-c15b-4423-a570-8f3a8bbb032c",
+          "path": "<Mouse>/position",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Point",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "95faf649-6cc1-465b-b90f-6a86e7be022e",
+          "path": "<Mouse>/leftButton",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Cannon",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "e3fa80fc-e62b-4bf0-9c6a-d084d8a689cc",
+          "path": "<Mouse>/rightButton",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "MachineGun",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "3f1603c5-ac4b-4c3b-8dca-1725cef0bed9",
+          "path": "<Keyboard>/r",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Restart",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "322a7caa-f2c9-483e-83c3-99638334f0ca",
+          "path": "<Mouse>/scroll/y",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "CycleWeapon",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "43d6c159-aa7f-40de-a8fb-15b1b0d03e77",
+          "path": "<Keyboard>/digit1",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Weapon1",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "50b2f6ab-ed42-4188-be55-fd8ed6a278a5",
+          "path": "<Keyboard>/digit2",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Weapon2",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "20b7dc42-840d-4d96-8766-a2e3882fbb18",
+          "path": "<Keyboard>/digit3",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Weapon3",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "25ae4720-84c6-4abf-be66-b1ae794b68e1",
+          "path": "<Keyboard>/digit4",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Weapon4",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "180c6c5f-b659-41ea-a4fc-d93db361fc9d",
+          "path": "<Gamepad>/leftStick",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "GamepadMove",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "f39126f6-91e6-4f4c-bfbb-ea47ff243a7d",
+          "path": "<Gamepad>/rightStick",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "StickAim",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "a2441d86-4cc9-4034-840a-5e6247b5ee02",
+          "path": "<Gamepad>/leftShoulder",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "PreviousWeapon",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "ca65c899-4aad-4e8c-9cdf-3511ebeb52e8",
+          "path": "<Gamepad>/rightShoulder",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "NextWeapon",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "f4021028-d4ee-45e0-8e30-2309a92bf457",
+          "path": "<Gamepad>/rightTrigger",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Cannon",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "a9e2496f-d379-4e68-ab7b-ed0158c1b6be",
+          "path": "<Gamepad>/leftTrigger",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "MachineGun",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "627f3678-85d6-4957-8f75-c5c85568ca85",
+          "path": "<Gamepad>/select",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Restart",
+          "isComposite": false,
+          "isPartOfComposite": false
+        }
+      ]
+    }
+  ],
+  "controlSchemes": []
 }
