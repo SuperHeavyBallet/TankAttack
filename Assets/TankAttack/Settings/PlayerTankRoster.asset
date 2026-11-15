@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b93c4e28ec3700d468ce69f60641f5af, type: 3}
+  m_Name: PlayerTankRoster
+  m_EditorClassIdentifier: TankAttack.Runtime::TankAttack.TankRoster
+  tanks:
+  - {fileID: 11400000, guid: 913f240a0c78ac3408d8716f5999112c, type: 2}
+  - {fileID: 11400000, guid: ab1dd7c048cf61c4d8d17272a5ffcd27, type: 2}
+  - {fileID: 11400000, guid: c1fa4a2966d7eb94480b7cbe721efa8c, type: 2}
+  gameplayScene: Assets/TankAttack/Scenes/TankAttack_Prototype.unity
+  menuScene: Assets/TankAttack/Scenes/TankAttack_Menu.unity

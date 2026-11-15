@@ -23,8 +23,17 @@ namespace TankAttack.Editor
             string request = File.ReadAllText(Request);
             File.Delete(Request);
             if (request.StartsWith("Refresh")) { AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate); return; }
+            if (request.StartsWith("MenuSetupSaved"))
+            {
+                var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+                Debug.Log("MENU_SETUP_ACTIVE_SCENE: " + scene.path + " dirty=" + scene.isDirty);
+                if (scene.path == PrototypeBuilder.ScenePath || scene.path == TankMenuBuilder.MenuPath)
+                    EditorSceneManager.SaveScene(scene);
+            }
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty)
             { Debug.LogWarning("Save your scene, then use Tank Attack > Run Gameplay Checks."); return; }
+            if (request.StartsWith("MenuOpen")) { TankMenuBuilder.OpenMenu(); return; }
+            if (request.StartsWith("MenuSetup")) TankMenuBuilder.Apply();
             if (request.StartsWith("Expand")) PrototypeExpansion.Apply();
             if (request.StartsWith("Clearance"))
             {

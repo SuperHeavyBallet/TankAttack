@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a774423f853c17740bc4d624ecae36ae, type: 3}
   m_Name: PlayerMachineGun
   m_EditorClassIdentifier: TankAttack.Runtime::TankAttack.WeaponSettings
-  damage: 4
+  displayName: 
+  capacity: 101
+  blastRadius: 0
+  damage: 5
   interval: 0.09
   range: 45
   projectileSpeed: 0
@@ -20,6 +23,6 @@ MonoBehaviour:
   aimTolerance: 0.6
   tracerMaterial: {fileID: 2100000, guid: 1977e6dddb4da6c4bbcfa3c9f071341b, type: 2}
   tracerColor: {r: 1, g: 0.75, b: 0.2, a: 1}
-  fireClip: {fileID: 0}
-  impactClip: {fileID: 0}
+  fireClip: {fileID: 8300000, guid: bf2ede0bd977fa04cbffb6f39b78786f, type: 3}
+  impactClip: {fileID: 8300000, guid: 7883d50790fce9b4d921c556a234854c, type: 3}
   volume: 0.7

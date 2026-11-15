@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a774423f853c17740bc4d624ecae36ae, type: 3}
   m_Name: EnemyCannon
   m_EditorClassIdentifier: TankAttack.Runtime::TankAttack.WeaponSettings
-  damage: 14
-  interval: 2.8
+  displayName: 
+  capacity: 101
+  blastRadius: 2
+  damage: 20
+  interval: 2
   range: 80
   projectileSpeed: 30
   radius: 0.08
   aimTolerance: 0.6
   tracerMaterial: {fileID: 2100000, guid: 1977e6dddb4da6c4bbcfa3c9f071341b, type: 2}
   tracerColor: {r: 1, g: 0.75, b: 0.2, a: 1}
-  fireClip: {fileID: 0}
-  impactClip: {fileID: 0}
+  fireClip: {fileID: 8300000, guid: ef42a3a1e6ef49e448d9367f86255dab, type: 3}
+  impactClip: {fileID: 8300000, guid: 7883d50790fce9b4d921c556a234854c, type: 3}
   volume: 0.7

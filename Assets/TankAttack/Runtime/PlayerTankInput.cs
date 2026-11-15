@@ -19,6 +19,7 @@ namespace TankAttack
         InputActionAsset instance;
         InputAction move, point, primary, secondary, restart;
         Camera view;
+
         void Awake()
         {
             instance = Instantiate(actions);
@@ -28,13 +29,17 @@ namespace TankAttack
             cycle = instance.FindAction("Tank/CycleWeapon");
             for (int i=0;i<slots.Length;i++) slots[i] = instance.FindAction("Tank/Weapon" + (i+1));
         }
+
         void OnEnable() { instance.Enable(); Cursor.visible = false; }
+
         void OnDisable()
         {
             instance.Disable(); Cursor.visible = true; motor.Command = Vector2.zero;
             cannon.TriggerHeld = machineGun.TriggerHeld = false;
         }
+
         void OnDestroy() { if (instance != null) Destroy(instance); }
+
         void Update()
         {
             if (restart.WasPressedThisFrame()) { BattleSession.Instance?.Restart(); return; }
@@ -51,9 +56,10 @@ namespace TankAttack
             machineGun.TriggerHeld = HasAimPoint && secondary.IsPressed();
             GetComponent<VehicleAudio>()?.SetMotion(motor.Command.magnitude, aim.TurnAmount);
         }
+
         public void ResolveAim(Ray ray)
         {
-            HasAimPoint = CombatPhysics.Cast(ray.origin,ray.direction,400,0,transform,out var hit);
+            HasAimPoint = CombatPhysics.Cast(ray.origin,ray.direction,400,0,transform,out var hit,includeShotVolumes: false);
             AimTarget = HasAimPoint ? hit.collider.GetComponentInParent<Damageable>() : null;
             if (!HasAimPoint) return;
             // Aim into the target volume rather than grazing the camera-visible roof.

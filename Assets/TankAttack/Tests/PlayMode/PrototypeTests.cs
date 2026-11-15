@@ -58,6 +58,77 @@ namespace TankAttack.Tests
             Assert.That(input.cannon.CanHit(aim.Target), Is.False);
             Object.Destroy(wall);
         }
+        [UnityTest]
+        public IEnumerator HullStaysUprightWhileTurningAgainstCover()
+        {
+            var body = input.motor.GetComponent<Rigidbody>();
+            body.position = new Vector3(-10,.68f,-17);
+            body.rotation = Quaternion.identity;
+            var rammer = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            rammer.transform.position = body.position + new Vector3(6,.7f,0);
+            rammer.transform.localScale = new Vector3(2,2,3);
+            var otherBody = rammer.AddComponent<Rigidbody>();
+            otherBody.mass = 2500;
+            otherBody.useGravity = false;
+            otherBody.linearVelocity = Vector3.left * 12;
+            Physics.SyncTransforms();
+            input.motor.Command = new Vector2(.25f,1);
+            for (int i=0;i<150;i++)
+            {
+                // Exercise real contact impulses while steering, rather than scripted torque.
+                yield return new WaitForFixedUpdate();
+                Assert.That(Vector3.Angle(body.rotation * Vector3.up, Vector3.up), Is.LessThan(.1f));
+            }
+            input.motor.Command = Vector2.zero;
+            Assert.That(otherBody.linearVelocity.x, Is.GreaterThan(-10), "The rammer must have made physical contact.");
+            Object.Destroy(rammer);
+        }
+        [UnityTest]
+        public IEnumerator GunsStayHorizontalForNearAndElevatedCursor()
+        {
+            foreach (var offset in new[] { new Vector3(.1f,-10,.1f), new Vector3(10,30,10), Vector3.zero })
+            {
+                input.aim.Target = input.aim.yawPivot.position + offset;
+                for (int i=0;i<10;i++)
+                {
+                    yield return null;
+                    Assert.That(Mathf.Abs(input.cannon.muzzle.forward.y), Is.LessThan(.0001f));
+                    Assert.That(Mathf.Abs(input.machineGun.muzzle.forward.y), Is.LessThan(.0001f));
+                }
+            }
+            input.aim.Target = input.aim.yawPivot.position + Vector3.forward * 15;
+            yield return new WaitForSeconds(2);
+            var ground = input.aim.Target; ground.y = 0;
+            Assert.That(input.cannon.CanHit(ground), Is.True, "Ground cursor uses horizontal range/alignment.");
+        }
+        [UnityTest]
+        public IEnumerator HorizontalWeaponsHitSmallScoutAndRespectCover()
+        {
+            GameObject smallest = spawner.enemyPrefab;
+            foreach (var variant in spawner.enemyVariants)
+                if (variant != null && variant.transform.localScale.y < smallest.transform.localScale.y) smallest = variant;
+            var enemy = Object.Instantiate(smallest, new Vector3(0,.4f,-8), Quaternion.identity);
+            enemy.GetComponent<EnemyTankAI>().enabled = false;
+            enemy.GetComponent<TankMotor>().enabled = false;
+            enemy.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            var health = enemy.GetComponent<Damageable>();
+            input.aim.Target = enemy.transform.position;
+            yield return new WaitForSeconds(1);
+            Physics.SyncTransforms();
+            Assert.That(input.cannon.CanHit(enemy.transform.position, enemy.transform), Is.True);
+            Assert.That(input.machineGun.CanHit(enemy.transform.position, enemy.transform), Is.True);
+            float before = health.Health;
+            input.machineGun.TryFire();
+            Assert.That(health.Health, Is.EqualTo(before - input.machineGun.settings.damage));
+            var wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            wall.transform.position = (input.transform.position + enemy.transform.position) * .5f + Vector3.up;
+            wall.transform.localScale = new Vector3(5,5,1);
+            Physics.SyncTransforms();
+            Assert.That(input.cannon.CanHit(enemy.transform.position, enemy.transform), Is.False);
+            Assert.That(input.machineGun.CanHit(enemy.transform.position, enemy.transform), Is.False);
+            Object.Destroy(wall);
+            Object.Destroy(enemy);
+        }
         GameObject EnemyInFront()
         {
             var enemy = Object.Instantiate(spawner.enemyPrefab, input.cannon.muzzle.position + Vector3.forward * 12, Quaternion.identity);

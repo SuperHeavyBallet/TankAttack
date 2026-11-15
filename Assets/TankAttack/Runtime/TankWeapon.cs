@@ -62,6 +62,8 @@ namespace TankAttack
                 return CombatPhysics.Cast(muzzle.position,muzzle.forward,settings.range,settings.radius,owner.transform,out var targetHit)
                     && targetHit.transform.IsChildOf(targetRoot);
             }
+            // Ground cursor positions represent a horizontal location at barrel height.
+            point.y = muzzle.position.y;
             Vector3 delta = point - muzzle.position;
             float along = Vector3.Dot(delta, muzzle.forward);
             if (along <= 0 || along > settings.range || Vector3.Cross(delta, muzzle.forward).magnitude > settings.aimTolerance) return false;

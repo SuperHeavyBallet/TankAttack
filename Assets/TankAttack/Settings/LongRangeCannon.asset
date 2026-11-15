@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: TankAttack.Runtime::TankAttack.WeaponSettings
   displayName: Long Range
   capacity: 101
-  blastRadius: 0
-  damage: 40
+  blastRadius: 2
+  damage: 70
   interval: 1.2
   range: 140
-  projectileSpeed: 45
+  projectileSpeed: 70
   radius: 0.08
   aimTolerance: 0.6
   tracerMaterial: {fileID: 2100000, guid: 1977e6dddb4da6c4bbcfa3c9f071341b, type: 2}
   tracerColor: {r: 1, g: 0.75, b: 0.2, a: 1}
-  fireClip: {fileID: 0}
-  impactClip: {fileID: 0}
+  fireClip: {fileID: 8300000, guid: 4480e010beabaae4d9eee786711872ea, type: 3}
+  impactClip: {fileID: 8300000, guid: 7883d50790fce9b4d921c556a234854c, type: 3}
   volume: 0.7

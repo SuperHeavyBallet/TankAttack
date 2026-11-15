@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: TankAttack.Runtime::TankAttack.WeaponSettings
   displayName: Blast Cannon
   capacity: 101
-  blastRadius: 6
-  damage: 35
+  blastRadius: 20
+  damage: 45
   interval: 1.7
   range: 70
   projectileSpeed: 40
-  radius: 0.08
+  radius: 0.12
   aimTolerance: 0.6
   tracerMaterial: {fileID: 2100000, guid: 1977e6dddb4da6c4bbcfa3c9f071341b, type: 2}
   tracerColor: {r: 1, g: 0.75, b: 0.2, a: 1}
-  fireClip: {fileID: 0}
-  impactClip: {fileID: 0}
+  fireClip: {fileID: 8300000, guid: 4480e010beabaae4d9eee786711872ea, type: 3}
+  impactClip: {fileID: 8300000, guid: 7883d50790fce9b4d921c556a234854c, type: 3}
   volume: 0.7

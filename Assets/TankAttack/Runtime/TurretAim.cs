@@ -10,16 +10,17 @@ namespace TankAttack
         void Start() => Target = transform.position + transform.forward * 20;
         void LateUpdate()
         {
-            if (!BattleSession.IsRunning) return;
-            Vector3 delta = Target - pitchPivot.position;
-            Vector3 flat = Vector3.ProjectOnPlane(delta, Vector3.up);
+            // Keep the mesh/muzzle contract, but never elevate or depress the barrel.
+            pitchPivot.localRotation = Quaternion.identity;
+            float yaw = yawPivot.eulerAngles.y;
+            yawPivot.rotation = Quaternion.Euler(0, yaw, 0);
+            TurnAmount = 0;
+            if (!BattleSession.IsRunning || settings == null) return;
+            Vector3 flat = Vector3.ProjectOnPlane(Target - yawPivot.position, Vector3.up);
             if (flat.sqrMagnitude < .001f) return;
-            Quaternion desired = Quaternion.LookRotation(flat, Vector3.up);
-            TurnAmount = Mathf.Clamp01(Quaternion.Angle(yawPivot.rotation, desired) / 20);
-            yawPivot.rotation = Quaternion.RotateTowards(yawPivot.rotation, desired, settings.turretTurnSpeed * Time.deltaTime);
-            float elevation = -Mathf.Atan2(delta.y, flat.magnitude) * Mathf.Rad2Deg;
-            var pitch = Quaternion.Euler(Mathf.Clamp(elevation, -35, 40), 0, 0);
-            pitchPivot.localRotation = Quaternion.RotateTowards(pitchPivot.localRotation, pitch, settings.elevationSpeed * Time.deltaTime);
+            float desired = Mathf.Atan2(flat.x, flat.z) * Mathf.Rad2Deg;
+            TurnAmount = Mathf.Clamp01(Mathf.Abs(Mathf.DeltaAngle(yaw, desired)) / 20);
+            yawPivot.rotation = Quaternion.Euler(0, Mathf.MoveTowardsAngle(yaw, desired, settings.turretTurnSpeed * Time.deltaTime), 0);
         }
     }
 }

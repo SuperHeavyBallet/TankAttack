@@ -16,7 +16,25 @@ namespace TankAttack
         }
         public bool IsDead { get; private set; }
         public event Action<Damageable, Team> Died;
-        void Awake() => Health = settings != null ? settings.health : 100;
+        [Min(0), Tooltip("Minimum world-space target height for horizontal shots. Does not affect movement collisions. Zero disables the extra hit volume.")]
+        public float shotTargetHeight = 3;
+        public Collider ShotCollider { get; private set; }
+        void Awake()
+        {
+            Health = settings != null ? settings.health : 100;
+            var hull = GetComponent<BoxCollider>();
+            if (hull == null || shotTargetHeight <= 0) return;
+            var volume = new GameObject("Shot hit volume");
+            volume.transform.SetParent(transform, false);
+            var box = volume.AddComponent<BoxCollider>();
+            box.isTrigger = true;
+            Vector3 size = hull.size;
+            float bottom = hull.center.y - size.y * .5f;
+            size.y = Mathf.Max(size.y, shotTargetHeight / Mathf.Max(.001f, Mathf.Abs(transform.lossyScale.y)));
+            box.size = size;
+            box.center = new Vector3(hull.center.x, bottom + size.y * .5f, hull.center.z);
+            ShotCollider = box;
+        }
         public void ApplyDamage(float amount, Team attacker)
         {
             if (IsDead || (attacker == Team.Player && team == Team.Player) || amount <= 0) return;

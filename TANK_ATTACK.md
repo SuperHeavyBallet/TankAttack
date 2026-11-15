@@ -2,17 +2,18 @@
 
 ## Open and play
 
-In Unity, choose **Tank Attack > Create or Open Prototype**, then press Play.
+In Unity, choose **Tank Attack > Open Main Menu**, then press Play. Select a tank, review its stats, then Confirm & Deploy. Builds start in the menu. The gameplay scene can still be opened directly for development and defaults to Tank 2.
 Scene: Assets/TankAttack/Scenes/TankAttack_Prototype.unity.
 
 - W/S or up/down: forward/reverse.
 - A/D or left/right: rotate the hull, including while stationary.
-- Mouse: aim the independently rotating turret and elevating barrel.
+- Mouse: aim the independently rotating turret; both guns remain horizontal.
 - Hold left mouse: fire cannon shells on the reload interval.
 - Hold right mouse: fire the coaxial machine gun.
 - Drive over a weapon pickup to collect and equip it.
 - Keys 1–4 select collected cannons (basic cannon first, then collection order); mouse wheel cycles them.
-- R: restart, including after victory or destruction.
+- R: restart with the selected tank, including after victory or destruction.
+- Escape: return to tank selection.
 - Reach the blue extraction zone at the far end of the arena. Destroy enemy tanks for points.
 
 The main red/green crosshair reports the **equipped cannon**; the small center dot reports the machine gun independently. Both are calculated once per frame after turret rotation. Selecting an enemy aims into its collider and accepts a first hit anywhere on that enemy, rather than comparing the camera's roof contact with the barrel's front-armour contact. Solid cover still blocks the signal immediately. Reload is displayed separately; a travelling shell can still miss an enemy that moves after firing.
@@ -41,20 +42,20 @@ Blast Radius = 0 means direct damage only. Positive values apply the weapon's da
 
 ## Designer tuning
 
-Assets/TankAttack/Settings contains separate player/enemy vehicle, cannon, and machine-gun assets. Tune speeds, acceleration, braking, turn rates, turret/elevation rates, health, weapon damage, range, cadence, and projectile speed there. Scene objects expose camera offset, spawn locations, respawn delay, and destination bounds.
+Assets/TankAttack/Settings contains separate player/enemy vehicle, cannon, and machine-gun assets. Tune speeds, acceleration, braking, turn rates, turret turn rates, health, weapon damage, range, cadence, and projectile speed there. Scene objects expose camera offset, spawn locations, respawn delay, and destination bounds.
 
 ## Art and audio contracts
 
 Prefabs: Assets/TankAttack/Prefabs/PlayerTank.prefab and EnemyTank.prefab.
 
-Replace the meshes below HullVisual and TurretYaw. Keep the hierarchy pivots and existing component references intact. GunPitch carries the weapon meshes and CannonMuzzle/MachineGunMuzzle transforms. Local +Z is forward, +Y is up; distances are meters. Keep the Rigidbody and gameplay collider on the root. Adjust the collider and navigation clearance if the tank footprint changes. Cosmetic meshes have no colliders, so the prototype hull box defines the complete target hitbox.
+Replace the meshes below HullVisual and TurretYaw. Keep the hierarchy pivots and existing component references intact. GunPitch carries the weapon meshes and CannonMuzzle/MachineGunMuzzle transforms. Local +Z is forward, +Y is up; distances are meters. Keep the Rigidbody and gameplay collider on the root. Adjust the collider and navigation clearance if the tank footprint changes. Cosmetic meshes have no colliders, so the prototype hull box defines movement collisions. Damageable creates a shot-only trigger with the same footprint and a minimum world height of 3 meters (Shot Target Height in the Inspector), allowing level guns to hit smaller vehicles. This does not add physical contact or block driving; camera selection still uses the original hull collider.
 
 WeaponSettings exposes fireClip, impactClip, volume, and a referenced tracer material. VehicleAudio on each tank exposes engineLoop, turretLoop, destructionClip, and an optional AudioMixerGroup. Assign clips before entering Play mode; unassigned slots remain silent. These are ordinary serialized asset references, so no Resources directory or runtime filename conventions are required. Spatial impact sounds currently use the default audio output; vehicle sounds use the assigned mixer group.
 
 ## Architecture
 
 - PlayerTankInput owns a private instance of TankControls.inputactions and caches separate cannon/MG reticle results after aiming.
-- TankMotor handles Rigidbody movement; TurretAim handles yaw and elevation.
+- TankMotor handles upright Rigidbody movement and yaw steering; TurretAim handles horizontal yaw only. GunPitch stays at identity; the legacy elevation speed setting is unused.
 - TankWeapon handles cadence, collected cannon selection, per-weapon ammo, and firing. ShellProjectile performs swept collision for the cannon. CombatPhysics filters owner colliders and resolves hits.
 - Damageable owns health, capped healing, and a one-time death event. HealthDrop spawns HealthPickup on enemy death; WeaponPickup equips/refills cannon variants. BattleSession owns score and victory/defeat.
 - EnemyTankAI follows NavMesh paths and operates the shared vehicle components. EnemySpawner owns delayed spawn slots and their repeating enemy-variant pattern.
@@ -82,3 +83,14 @@ First playtest priorities: hull responsiveness, turret speed, cannon cadence, ca
 
 Initial prototype: 10 Play Mode checks passed. Expansion verification is recorded in Logs/TankAttack-PlayMode.xml. Standalone build validation remains outstanding.
 
+
+## Tank selection and persistent engine audio
+
+See MENU_AUDIO_SETUP.md for the three player tank definitions, separate light/heavy tuning, and the persistent two-source crossfade utility. Assign the engine rumble clip in Assets/TankAttack/Settings/PlayerEngineAudio.asset. The medium tank references the existing player settings directly. Verified on 12 November 2026: 31 Play Mode checks passed, menu render reviewed, and all pre-existing tuning assets remained byte-for-byte unchanged.
+
+
+## Horizontal aiming and upright hulls
+
+TankMotor freezes physics rotation on all three axes at runtime and supplies yaw through Rigidbody.MoveRotation. This is intentional: steering still works, while contact impulses cannot roll, pitch, or spin the hull. Position remains physically simulated. TurretAim keeps GunPitch level even when the cursor is close to the tank or above it. Ground reticle alignment uses horizontal distance at muzzle height; selected enemies still require a first-contact hit and cover blocks shots.
+
+Verified on 12 November 2026: all 34 Play Mode checks passed (Logs/TankAttack-PlayMode.xml), including an off-centre Rigidbody impact while steering against cover, level guns at close/elevated targets, and horizontal shots against scouts. Direct scripted torque is outside the collision regression; external scripts should not apply rotation/torque to TankMotor bodies. No standalone build was run for this change.

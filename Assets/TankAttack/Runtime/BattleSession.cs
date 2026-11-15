@@ -11,6 +11,7 @@ namespace TankAttack
         public RunState State { get; private set; }
         public Damageable player;
         public Transform destination;
+        public string menuScene = "Assets/TankAttack/Scenes/TankAttack_Menu.unity";
         public int Score { get; private set; }
         GUIStyle title, body;
         bool restarting;
@@ -20,6 +21,7 @@ namespace TankAttack
         void OnDestroy() { if (Instance == this) Instance = null; Cursor.visible = true; }
         void Update()
         {
+            if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) { ReturnToMenu(); return; }
             // Remains available after the player object has been destroyed.
             if (State != RunState.Playing && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame) Restart();
         }
@@ -27,6 +29,12 @@ namespace TankAttack
         public void Complete() { if (State == RunState.Playing) { State = RunState.Won; Cursor.visible = true; } }
         public void Restart()
         { if (!restarting) { restarting = true; SceneManager.LoadScene(SceneManager.GetActiveScene().path); } }
+        public void ReturnToMenu()
+        {
+            if(restarting || SceneUtility.GetBuildIndexByScenePath(menuScene)<0) return;
+            restarting=true; CrossfadedEngineAudio.Existing?.StopEngine();
+            SceneManager.LoadScene(menuScene);
+        }
         void OnGUI()
         {
             if (title == null)
@@ -37,13 +45,13 @@ namespace TankAttack
             GUI.Box(new Rect(14, 14, 380, 156), GUIContent.none);
             GUI.Label(new Rect(28, 22, 350, 35), "TANK ATTACK / PROTOTYPE", title);
             GUI.Label(new Rect(28, 60, 350, 28), $"Hull {(player != null ? player.Health : 0):0}   |   Score {Score}", body);
-            GUI.Label(new Rect(28, 91, 350, 24), "WASD / arrows: drive and turn   |   R: restart", body);
+            GUI.Label(new Rect(28, 91, 350, 24), "WASD / arrows: drive | R: restart | Esc: menu", body);
             GUI.Label(new Rect(28, 118, 350, 24), "LMB: cannon | RMB: MG | 1-4 / wheel: swap", body);
             if (State != RunState.Playing)
             {
                 GUI.Box(new Rect(Screen.width / 2 - 220, Screen.height / 2 - 70, 440, 140), GUIContent.none);
                 GUI.Label(new Rect(Screen.width / 2 - 190, Screen.height / 2 - 50, 400, 40), State == RunState.Won ? "DESTINATION REACHED" : "TANK DESTROYED", title);
-                GUI.Label(new Rect(Screen.width / 2 - 190, Screen.height / 2, 400, 30), $"Score {Score}     Press R to play again", body);
+                GUI.Label(new Rect(Screen.width / 2 - 190, Screen.height / 2, 400, 30), $"Score {Score}     R: restart | Esc: tank selection", body);
                 return;
             }
             if (player == null) return;

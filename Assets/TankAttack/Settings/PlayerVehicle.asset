@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: PlayerVehicle
   m_EditorClassIdentifier: TankAttack.Runtime::TankAttack.VehicleSettings
   health: 100
-  forwardSpeed: 9
-  reverseSpeed: 5
-  acceleration: 14
-  braking: 22
-  hullTurnSpeed: 85
-  turretTurnSpeed: 65
+  forwardSpeed: 10
+  reverseSpeed: 8
+  acceleration: 25
+  braking: 50
+  hullTurnSpeed: 100
+  turretTurnSpeed: 100
   elevationSpeed: 45
   scoreValue: 100

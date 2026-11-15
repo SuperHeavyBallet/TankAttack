@@ -16,3 +16,4 @@
 - Enemy friendly fire deals normal damage. Friendly kills must not award player score. Health drops, delayed respawn, and blast occlusion must continue to work.
 - PrototypeExpansion is an additive, one-time content migration; preserve existing scene/prefab/tuning edits on reruns.
 - When the editor has not imported code changes, write Refresh to Temp/TankAttack.RunChecks.request first. Wait for the project assemblies to rebuild before queuing tests or scene changes; this avoids asking the user to refresh repeatedly.
+- Menu: Tank Attack > Open Main Menu. TankMenuBuilder is additive and must not reset existing tuning assets. Tank 2 references current player settings; light/heavy variants have separate assets. PlayerTankConfiguration must run before health, weapon and audio Awake initialization. EngineAudioSettings controls the persistent two-source player rumble; no clip should remain silent.

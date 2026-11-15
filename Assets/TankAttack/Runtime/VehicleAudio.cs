@@ -6,9 +6,11 @@ namespace TankAttack
     public sealed class VehicleAudio : MonoBehaviour
     {
         public AudioClip engineLoop, turretLoop, destructionClip;
+        public EngineAudioSettings engineSettings;
         public AudioMixerGroup mixerGroup;
         [Range(0, 1)] public float engineVolume = .25f;
         AudioSource effects, engine, turret;
+        bool playerEngine;
 
         void Awake()
         {
@@ -17,9 +19,19 @@ namespace TankAttack
             effects.spatialBlend = 1;
             effects.maxDistance = 65;
             effects.outputAudioMixerGroup = mixerGroup;
-            engine = Loop(engineLoop); turret = Loop(turretLoop);
+            playerEngine = GetComponent<Damageable>() != null && GetComponent<Damageable>().team == Team.Player;
+            if (!playerEngine) engine = Loop(engineLoop);
+            turret = Loop(turretLoop);
         }
 
+        void OnEnable()
+        {
+            if(playerEngine) CrossfadedEngineAudio.Instance.Bind(this,engineSettings,engineLoop,mixerGroup,engineVolume);
+        }
+        void OnDisable()
+        {
+            if(playerEngine) CrossfadedEngineAudio.Existing?.Release(this);
+        }
         AudioSource Loop(AudioClip clip)
         {
             var source = gameObject.AddComponent<AudioSource>();
@@ -32,8 +44,12 @@ namespace TankAttack
 
         public void SetMotion(float drive, float turn)
         {
-            engine.volume = engineVolume * Mathf.Lerp(.3f, 1, Mathf.Abs(drive));
-            engine.pitch = Mathf.Lerp(.7f, 1.3f, Mathf.Abs(drive));
+            if(playerEngine) CrossfadedEngineAudio.Existing?.SetDrive(this,drive);
+            else if(engine!=null)
+            {
+                engine.volume = engineVolume * Mathf.Lerp(.3f,1,Mathf.Abs(drive));
+                engine.pitch = Mathf.Lerp(.7f,1.3f,Mathf.Abs(drive));
+            }
             turret.volume = Mathf.Clamp01(turn) * .2f;
         }
 
