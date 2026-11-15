@@ -44,6 +44,14 @@ namespace TankAttack
             if (Health > 0) return;
             IsDead = true;
             GetComponent<VehicleAudio>()?.DestroySound();
+            if (team == Team.Enemy)
+            {
+                var destruction = GetComponent<EnemyDestruction>();
+                if (destruction == null) destruction = gameObject.AddComponent<EnemyDestruction>();
+                destruction.BecomeWreck();
+                Died?.Invoke(this, attacker);
+                return;
+            }
             Died?.Invoke(this, attacker);
             gameObject.SetActive(false);
             Destroy(gameObject);

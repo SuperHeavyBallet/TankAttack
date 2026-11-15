@@ -57,6 +57,12 @@ namespace TankAttack
         { if (clip != null) effects.PlayOneShot(clip, volume); }
 
         public void DestroySound() => At(destructionClip, transform.position, 1, mixerGroup);
+        public void StopLoops()
+        {
+            if (engine != null) engine.Stop();
+            if (turret != null) turret.Stop();
+            if (playerEngine) CrossfadedEngineAudio.Existing?.Release(this);
+        }
 
         public static void At(AudioClip clip, Vector3 position, float volume, AudioMixerGroup group = null)
         {

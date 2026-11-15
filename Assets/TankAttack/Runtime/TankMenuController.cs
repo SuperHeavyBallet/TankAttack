@@ -3,6 +3,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 namespace TankAttack
@@ -17,8 +18,14 @@ namespace TankAttack
         public Button confirmButton;
         public int SelectedIndex { get; private set; }
         public bool IsLoading { get; private set; }
+        InputActionAsset menuActions;
         void Awake()
         {
+            // Each scene owns its UI actions, avoiding stale bindings when devices or menus
+            // are replaced. Keep the authored bindings and navigation references intact.
+            var module=Object.FindAnyObjectByType<InputSystemUIInputModule>();
+            if (module != null && module.actionsAsset != null)
+            { menuActions=Instantiate(module.actionsAsset); module.actionsAsset=menuActions; }
             Cursor.visible=true; Cursor.lockState=CursorLockMode.None;
             CrossfadedEngineAudio.Existing?.StopEngine();
             for(int i=0;i<tankButtons.Length;i++)
@@ -33,6 +40,7 @@ namespace TankAttack
             Select(selected>=0 ? selected : Mathf.Min(1,roster.tanks.Length-1));
         }
         void Start() { if(EventSystem.current!=null) EventSystem.current.SetSelectedGameObject(tankButtons[SelectedIndex].gameObject); }
+        void OnDestroy() { if (menuActions != null) Destroy(menuActions); }
         void Update()
         {
             var events=EventSystem.current; var pad=Gamepad.current;

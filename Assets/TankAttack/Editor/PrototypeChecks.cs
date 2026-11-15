@@ -34,6 +34,7 @@ namespace TankAttack.Editor
             { Debug.LogWarning("Save your scene, then use Tank Attack > Run Gameplay Checks."); return; }
             if (request.StartsWith("MenuOpen")) { TankMenuBuilder.OpenMenu(); return; }
             if (request.StartsWith("GenerationSetup")) GeneratedLevelBuilder.Apply();
+            if (request.StartsWith("DestructionSetup")) DestructionBuilder.Apply();
             if (request.StartsWith("MenuSetup")) TankMenuBuilder.Apply();
             if (request.StartsWith("Expand")) PrototypeExpansion.Apply();
             if (request.StartsWith("Clearance"))

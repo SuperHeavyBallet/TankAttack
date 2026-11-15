@@ -106,3 +106,9 @@ Verified on 15 November 2026: all 39 Play Mode checks passed, including maximum-
 Generic gamepad controls are available alongside mouse/keyboard. Left stick drives and turns, right stick aims directionally, RT/R2 fires the cannon, LT/L2 fires the machine gun, and shoulders cycle collected weapons. Releasing the right stick retains aim direction. Mouse movement/clicks restore cursor aiming. Options/Start returns to selection; Share/Back restarts, including after death. Menu navigation uses D-pad/left stick and the bottom face button to activate a selection.
 
 See CONTROLLER_SUPPORT.md for bindings, inspector dead zones, reticle behavior, and limitations. Verified on 15 November 2026: 47/47 Play Mode checks passed using virtual generic gamepad and DualShock-layout devices. Physical controller and standalone executable tests have not yet been done.
+
+## Enemy explosions and wrecks
+
+Destroyed enemies play a size-scaled Particle System explosion and retain their original meshes as immobile, solid wrecks until the level unloads. AI, turret, weapons and engine/turret loops stop. Wrecks block movement and shots and carve navigation with tank clearance. Health drops move to nearby clear ground; blocked spawn zones search nearby navigable positions without deleting wrecks. Death events, score and drops remain one-time, including enemy friendly-fire kills.
+
+See ENEMY_DESTRUCTION.md for effect prefab/Inspector tuning and spawn/drop behavior. Verified on 15 November 2026: all 51 Play Mode checks passed and explosion/smoke previews were visually reviewed. The suite also exposed intermittent shared menu-input state; the menu now owns a private copy of its UI input actions. Standalone build verification has not been done.
